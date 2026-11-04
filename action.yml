@@ -1,0 +1,32 @@
+name: 'setup-sdk'
+description: >-
+  One-shot bootstrap: downloads ps2build directly, then runs
+  "ps2build update" to bootstrap the compiler toolchain and SDK
+  packages - ready to build a PS2 game.
+inputs:
+  ps2dev:
+    description: 'Directory to install everything into'
+    required: true
+  version:
+    description: 'ps2build release tag, or "latest"'
+    required: false
+    default: 'latest'
+  components:
+    description: >-
+      Comma or newline-separated component names (e.g.
+      "toolchain,tools,ninja") to install via "ps2build update
+      <name>", one call per name. If omitted, runs a plain
+      "ps2build update" with no argument, installing every component
+      - the previous, only behavior.
+    required: false
+    default: ''
+  force:
+    description: 'Reinstall every component even if already current'
+    required: false
+    default: 'false'
+outputs:
+  version:
+    description: 'The resolved ps2build release tag that was installed'
+runs:
+  using: node24
+  main: dist/index.js
